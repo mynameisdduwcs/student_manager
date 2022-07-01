@@ -33,6 +33,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\SubjectScore\SubjectScoreRepositoryInterface::class,
             \App\Repositories\SubjectScore\SubjectScoreRepository::class
         );
+        $this->app->singleton(
+            \App\Repositories\User\UserRepositoryInterface::class,
+            \App\Repositories\User\UserRepository::class
+        );
     }
 
     /**

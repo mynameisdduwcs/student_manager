@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Faculty\FacultyRepository;
+use App\Repositories\Faculty\FacultyRepositoryInterface;
 use Illuminate\Http\Request;
 
 class FacultyController extends Controller
@@ -14,7 +15,7 @@ class FacultyController extends Controller
      */
     protected $facultyRepo;
 
-    public function __construct(FacultyRepository $facultyRepo)
+    public function __construct(FacultyRepositoryInterface $facultyRepo)
     {
         $this->facultyRepo = $facultyRepo;
     }

@@ -21,6 +21,7 @@ class Student extends Model
         'phone',
         'email',
         'faculty_id',
+        'user_id',
         'description',
     ];
 
@@ -35,22 +36,26 @@ class Student extends Model
     {
         return $this->belongsToMany(Subject::class, 'subject_scores')->withPivot('point');
     }
+
     public function point()
     {
-        return $this->hasMany(SubjectScore::class,'student_id','id');
+        return $this->hasMany(SubjectScore::class, 'student_id', 'id');
     }
 
     protected function age(): Attribute
     {
         return Attribute::make(
-            get:function ($value, $attributes){
-             $date =new \DateTime($attributes['birthdate']);
-             $now= new \DateTime();
-             return $now->diff($date)->y;
+            get: function ($value, $attributes) {
+                $date = new \DateTime($attributes['birthdate']);
+                $now = new \DateTime();
+                return $now->diff($date)->y;
             },
         );
     }
 
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }

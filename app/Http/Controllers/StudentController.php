@@ -8,7 +8,11 @@ use App\Repositories\Faculty\FacultyRepositoryInterface;
 use App\Repositories\Student\StudentRepositoryInterface;
 use App\Repositories\Subject\SubjectRepositoryInterface;
 use App\Repositories\SubjectScore\SubjectScoreRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
+use App\Mail\MailNotify;
+use Illuminate\Support\Facades\Hash;
+use Psy\Util\Str;
 
 class StudentController extends Controller
 {
@@ -22,18 +26,21 @@ class StudentController extends Controller
     protected $facultyRepo;
     protected $subjectRepo;
     protected $pointRepo;
+    protected $userRepo;
 
     public function __construct(
         StudentRepositoryInterface      $studentRepo,
         FacultyRepositoryInterface      $facultyRepo,
         SubjectRepositoryInterface      $subjectRepo,
         SubjectScoreRepositoryInterface $pointRepo,
+        UserRepositoryInterface         $userRepo,
     )
     {
         $this->studentRepo = $studentRepo;
         $this->facultyRepo = $facultyRepo;
         $this->subjectRepo = $subjectRepo;
         $this->pointRepo = $pointRepo;
+        $this->userRepo = $userRepo;
     }
 
 
@@ -56,8 +63,10 @@ class StudentController extends Controller
 
         $faculties = $this->facultyRepo->pluck('name', 'id');
         $students = $this->studentRepo->getAll();
+        $users = $this->userRepo->pluck('email', 'password');
 
-        return view('students.edit_create', compact('students', 'faculties'));
+
+        return view('students.edit_create', compact('students', 'faculties', 'users'));
     }
 
     /**
@@ -70,13 +79,17 @@ class StudentController extends Controller
     {
 
         $getAll = $request->all();
+
         if ($request->has('avatar')) {
             $file_name = $request->file('avatar');
             //dd($file_name);
             $post_file = $file_name->move('images', $file_name->getClientOriginalName());
         }
         $getAll['avatar'] = $post_file;
-        $this->studentRepo->create($getAll);
+        $getAll['password'] = Hash::make('123456789');
+        $student = $this->studentRepo->create($getAll);
+        $getAll['name'] = $student->fullName;
+        $this->userRepo->create($getAll);
         return redirect()->route('students.index')->with('success', 'Item created successfully!');
     }
 
@@ -144,17 +157,9 @@ class StudentController extends Controller
 
     public function addPoint($id)
     {
-
-//        $student = $this->studentsRepo->find($id);
-//        $subject = $student->subjects->pluck('name', 'id')->toArray();
-//        $subjects = $this->subjectsRepo->getAll();
         $getSubjects = $this->subjectRepo->getAll();
         $findStudentId = $this->studentRepo->find($id);
         $getSubjectsById = $findStudentId->subjects;
-//        dd($getSubjectsById);
-//        $getUnnsubjects = $getSubjects->diff($getSubjectsById)->pluck('name', 'id')->toArray();
-//        dd($getSubjectsById);
-
         return view('students.addPointSubject', compact('getSubjects', 'findStudentId', 'getSubjectsById',));
     }
 
@@ -187,11 +192,13 @@ class StudentController extends Controller
         return view('students.index', compact('students'))->with('i');
     }
 
-    public function badstudent(Request $request){
-        $badstudents=$this->studentRepo->badStudent();
+    public function sendMail(Request $request)
+    {
+        $badstudents = $this->studentRepo->badStudent();
 
         SendEmail::dispatch($badstudents);
         return redirect()->back();
     }
+
 
 }

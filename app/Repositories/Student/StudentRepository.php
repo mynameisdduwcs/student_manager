@@ -58,8 +58,8 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
                 $query->where('point', '>', 0);
             }, '=', $subjetcs);
         }
-        if(!empty($data['learn_status']) && $data['learn_status'] == 'unfinished'){
-            $students->has('subjects','<',$subjetcs);
+        if (!empty($data['learn_status']) && $data['learn_status'] == 'unfinished') {
+            $students->has('subjects', '<', $subjetcs);
         }
 
         return $students->paginate(5);
@@ -69,9 +69,9 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
     {
         $students = $this->model->with('subjects');
         $subjetcs = Subject::all()->count();
-        $students->has('subjects','<=',$subjetcs)->whereHas('point', function ($query){
+        $students->has('subjects', '<=', $subjetcs)->whereHas('point', function ($query) {
             $query->havingRaw('avg(point)<5');
         });
-return $students->paginate(5);
+        return $students->paginate(5);
     }
 }

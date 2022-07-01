@@ -12,10 +12,12 @@
                     @include('students.search')
                 </div>
                 <div class="col-md-1">
-                    <a href="{{route('badstudents')}}" class="btn btn-primary float-end">Bad Student</a>
+                    <a href="{{route('send-mail')}}" class="btn btn-warning float-end"><i
+                            class="fa-solid fa-triangle-exclamation"></i></a>
                 </div>
                 <div class="col-md-1">
-                    <a href="{{route('students.create')}}" class="btn btn-primary float-end">ADD</a>
+                    <a href="{{route('students.create')}}" class="btn btn-success float-end"><i
+                            class="fa-solid fa-plus"></i></a>
                 </div>
 
             </div>
@@ -55,16 +57,16 @@
                         <td>{{$student->hometown}}</td>
                         <td>{{$student->phone}}</td>
                         <td>{{$student->email}}</td>
-                        <td>{{$student->id}}</td>
+                        <td>{{$student->faculty_id}}</td>
                         <td>{{$student->description}}</td>
                         <td>
                             {!! Form::model($student, ['route' => ['students.destroy', $student->id], 'method' => 'DELETE']) !!}
-                            <a href="{{route('students.edit', $student->id)}}" class="btn btn-info"> Edit</a>
-                            {{--                            <a href="{{route('students.subjects.index', $student->id)}}" class="btn btn-success">--}}
-                            {{--                                Subject</a>--}}
-                            <a href="{{route('students.addpoint.index', $student->id)}}" class="btn btn-dark">
-                                Point</a>
-                                {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                            {{--                            {!! Html::linkRoute('students.edit','da', [$student->id,'class'=>'fa-solid fa-pen-to-square']) !!}--}}
+                            {{--                            <a href="{{route('students.edit', $student->id)}}" class="btn btn-info"> <i class="fa-solid fa-pen-to-square"></i></a>--}}
+                            {{--                            <a href="{{route('students.addpoint.index', $student->id)}}" class="btn btn-dark"><i class="fa-solid fa-book-open"></i></a>--}}
+                            {!! Html::decode(link_to_route('students.edit', '<i class="fa-solid fa-pen-to-square"></i>',[$student->id ], ['class' => 'btn btn-info'])) !!}
+                            {!! Html::decode(link_to_route('students.addpoint.index', '<i class="fa-solid fa-book-open"></i>',[$student->id ], ['class' => 'btn btn-dark'])) !!}
+                            {!!  Form::button('<i class="fa-solid fa-trash-can"></i>', ['class' => 'fa-solid btn btn-danger', 'type' => 'submit'])  !!}
                             {!! Form::close() !!}
                         </td>
                     </tr>
