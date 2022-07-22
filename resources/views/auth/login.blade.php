@@ -79,8 +79,14 @@
                 <a href="{{ route('password.request') }}">I forgot my password</a>
             </p>
             <p class="mb-0">
-                <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
+                <a href="{{ route('custom-register') }}" class="text-center">Register a new membership</a>
             </p>
+            <div class="flex items-center justify-end mt-4">
+                <a class="btn" href="{{ route('loginSocial', 'facebook') }}"
+                   style="background: #3B5499; color: #ffffff; padding: 10px; width: 100%; text-align: center; display: block; border-radius:3px;">
+                    Login with Facebook
+                </a>
+            </div>
         </div>
         <!-- /.login-card-body -->
     </div>

@@ -4,7 +4,9 @@ namespace App\Repositories\Student;
 
 use App\Models\Subject;
 use App\Repositories\BaseRepository;
+use http\Env\Request;
 use Illuminate\Support\Carbon;
+
 
 class StudentRepository extends BaseRepository implements StudentRepositoryInterface
 {
@@ -74,4 +76,9 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         });
         return $students->paginate(5);
     }
+
+
+
+
+
 }

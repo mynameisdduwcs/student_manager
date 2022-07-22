@@ -10,5 +10,6 @@ class FacultyRepository extends BaseRepository implements FacultyRepositoryInter
     {
         return \App\Models\Faculty::class;
     }
+    
 
 }

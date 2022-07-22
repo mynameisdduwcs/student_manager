@@ -3,11 +3,19 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterRequest;
+use App\Models\Student;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Repositories\Faculty\FacultyRepositoryInterface;
+use App\Repositories\Student\StudentRepositoryInterface;
+use App\Repositories\Subject\SubjectRepositoryInterface;
+use App\Repositories\SubjectScore\SubjectScoreRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class RegisterController extends Controller
 {
@@ -30,44 +38,49 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    protected $studentRepo;
+    protected $userRepo;
+    protected $facutyRepo;
 
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param StudentRepositoryInterface $studentRepo
+     * @param UserRepositoryInterface $userRepo
      */
-    public function __construct()
+    public function __construct(StudentRepositoryInterface $studentRepo, UserRepositoryInterface $userRepo, FacultyRepositoryInterface $facutyRepo)
     {
         $this->middleware('guest');
+        $this->studentRepo = $studentRepo;
+        $this->facutyRepo = $facutyRepo;
+        $this->userRepo = $userRepo;
     }
 
     /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    protected function validator(array $data)
+    public function getData()
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        $faculties = $this->facutyRepo->getAll()->pluck('name', 'id');
+
+        return view('auth.register', compact('faculties'));
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
-    protected function create(array $data)
+    public function customRegister(RegisterRequest $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        $data = $request->all();
+        $newuser = $this->userRepo->create($data);
+        if ($request->has('avatar')) {
+            $file = $request->file('avatar');
+            $data['avatar'] = $file->move('images', time() . '_' . $file->getClientOriginalName());
+        }
+        $students = $this->studentRepo->create($data);
+        $this->userRepo->find($newuser->id)->update([
+            'student_id' => $students->id,
         ]);
+        Auth::login($newuser);
+
+        return redirect()->route('profile',Auth::id());
     }
+
 }

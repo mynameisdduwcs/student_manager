@@ -17,23 +17,13 @@
 
 /***/ }),
 
-/***/ "./resources/js/addpoint.js":
-/*!**********************************!*\
+/***/ "./resources/js/addPointSubject.js":
+/*!*****************************************!*\
   !*** ./resources/js/addPointSubject.js ***!
-  \**********************************/
+  \*****************************************/
 /***/ (() => {
 
 $(document).ready(function () {
-  $(document).on('click', '.delete', function () {
-    $(this).parent().parent().remove();
-    var $select = $("select");
-    var selected = [];
-    $.each($select, function (index, select) {
-      if (select.value !== "") {
-        selected.push(select.value).hide();
-      }
-    });
-  });
   form = $('tr.addform').html();
   $(".btn2").click(function () {
     var len = $('tbody#formadd tr').length;
@@ -45,10 +35,19 @@ $(document).ready(function () {
       alert('thôi thôi đủ rồi');
     }
   });
+  $(document).on('click', '.delete', function () {
+    $(this).parent().parent().remove();
+    var $select = $("select");
+    var selected = [];
+    $.each($select, function (index, select) {
+      if (select.value !== "") {
+        selected.push(select.value).hide();
+      }
+    });
+  });
   $('#saveform').on('click', function () {
     $('tr.addform').remove();
-  }); // ################################
-
+  });
   $(document).on('click', 'select', function () {
     var $select = $("select");
     var selected = [];
@@ -87,7 +86,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! admin-lte */ "./node_modules/admin-lte/dist/js/adminlte.min.js");
 
-__webpack_require__(/*! ./addpoint */ "./resources/js/addpoint.js");
+__webpack_require__(/*! ./addPointSubject */ "./resources/js/addPointSubject.js");
 
 /***/ }),
 
@@ -5881,7 +5880,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 
 			// Support: Firefox <=3.6 - 5 only
 			// Old Firefox doesn't throw on a badly-escaped identifier.
-			el.querySelectorAll( "\f" );
+			el.querySelectorAll( "\\\f" );
 			rbuggyQSA.push( "[\\r\\n\\f]" );
 		} );
 
@@ -32609,6 +32608,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/css/app.css":
+/*!*******************************!*\
+  !*** ./resources/css/app.css ***!
+  \*******************************/
+/***/ (() => {
+
+throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/css-loader/dist/cjs.js):\nError: Can't resolve 'resources/css/profile.css' in 'D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\resources\\css'\n    at finishWithoutResolve (D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\enhanced-resolve\\lib\\Resolver.js:309:18)\n    at D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\enhanced-resolve\\lib\\Resolver.js:386:15\n    at D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\enhanced-resolve\\lib\\Resolver.js:435:5\n    at eval (eval at create (D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\tapable\\lib\\HookCodeFactory.js:33:10), <anonymous>:16:1)\n    at D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\enhanced-resolve\\lib\\Resolver.js:435:5\n    at eval (eval at create (D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\tapable\\lib\\HookCodeFactory.js:33:10), <anonymous>:27:1)\n    at D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\enhanced-resolve\\lib\\DescriptionFilePlugin.js:87:43\n    at D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\enhanced-resolve\\lib\\Resolver.js:435:5\n    at eval (eval at create (D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\tapable\\lib\\HookCodeFactory.js:33:10), <anonymous>:15:1)\n    at D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\enhanced-resolve\\lib\\Resolver.js:435:5\n    at processResult (D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\webpack\\lib\\NormalModule.js:758:19)\n    at D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\webpack\\lib\\NormalModule.js:860:5\n    at D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\loader-runner\\lib\\LoaderRunner.js:400:11\n    at D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\loader-runner\\lib\\LoaderRunner.js:252:18\n    at context.callback (D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\loader-runner\\lib\\LoaderRunner.js:124:13)\n    at Object.loader (D:\\xampp\\htdocs\\SELF-EDUCATED\\Laravel\\student_manager\\node_modules\\css-loader\\dist\\index.js:155:5)\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)");
+
+/***/ }),
+
 /***/ "./node_modules/popper.js/dist/esm/popper.js":
 /*!***************************************************!*\
   !*** ./node_modules/popper.js/dist/esm/popper.js ***!
@@ -35244,7 +35253,7 @@ Popper.Defaults = Defaults;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -35258,20 +35267,20 @@ Popper.Defaults = Defaults;
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = __webpack_modules__;
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/chunk loaded */
 /******/ 	(() => {
@@ -35304,7 +35313,7 @@ Popper.Defaults = Defaults;
 /******/ 			return result;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -35316,7 +35325,7 @@ Popper.Defaults = Defaults;
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -35328,12 +35337,12 @@ Popper.Defaults = Defaults;
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -35344,7 +35353,7 @@ Popper.Defaults = Defaults;
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -35353,11 +35362,11 @@ Popper.Defaults = Defaults;
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */
 /******/ 	(() => {
 /******/ 		// no baseURI
-/******/
+/******/ 		
 /******/ 		// object to store loaded and loading chunks
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
@@ -35365,19 +35374,19 @@ Popper.Defaults = Defaults;
 /******/ 			"/js/app": 0,
 /******/ 			"css/app": 0
 /******/ 		};
-/******/
+/******/ 		
 /******/ 		// no chunk on demand loading
-/******/
+/******/ 		
 /******/ 		// no prefetching
-/******/
+/******/ 		
 /******/ 		// no preloaded
-/******/
+/******/ 		
 /******/ 		// no HMR
-/******/
+/******/ 		
 /******/ 		// no HMR manifest
-/******/
+/******/ 		
 /******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
-/******/
+/******/ 		
 /******/ 		// install a JSONP callback for chunk loading
 /******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
 /******/ 			var [chunkIds, moreModules, runtime] = data;
@@ -35402,20 +35411,21 @@ Popper.Defaults = Defaults;
 /******/ 			}
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
-/******/
+/******/ 		
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
-/******/
+/******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/sass/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/sass/app.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
-/******/
+/******/ 	
 /******/ })()
 ;

@@ -37,7 +37,6 @@
                     <th style="text-align: center;width:65px;font-size: 70%">Avatar</th>
                     <th style="text-align: center;width:65px;font-size: 70%">Gender</th>
                     <th style="text-align: center;width:65px;font-size: 70%">Birthday</th>
-                    <th style="text-align: center;width:65px;font-size: 70%">Home town</th>
                     <th style="text-align: center;width:65px;font-size: 70%">Phone number</th>
                     <th style="text-align: center;width:65px;font-size: 70%">Email</th>
                     <th style="text-align: center;width:65px;font-size: 70%">Faculty</th>
@@ -50,11 +49,10 @@
                 @foreach ($students as $student)
                     <tr>
                         <td> {{++$i}}</td>
-                        <td>{{$student->fullName}}</td>
+                        <td>{{$student->name}}</td>
                         <td><img style="width:60px; height:80px ;" src="{{$student->avatar}}"></td>
                         <td>{{$student->gender===1 ? "Nam" : "Nữ"}}</td>
                         <td>{{$student->birthdate}}</td>
-                        <td>{{$student->hometown}}</td>
                         <td>{{$student->phone}}</td>
                         <td>{{$student->email}}</td>
                         <td>{{$student->faculty_id}}</td>

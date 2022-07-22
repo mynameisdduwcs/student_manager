@@ -2,12 +2,17 @@
 
 namespace App\Repositories;
 
+use Exception;
+use Illuminate\Database\Eloquent\Model;
+
 abstract class BaseRepository implements RepositoryInterface
 {
     //model muốn tương tác
     protected $model;
 
     //khởi tạo
+    private $entity;
+
     public function __construct()
     {
         $this->setModel();
@@ -70,6 +75,7 @@ abstract class BaseRepository implements RepositoryInterface
 
         return false;
     }
+
     public function upload(StudentRequest $request)
     {
 
@@ -85,5 +91,20 @@ abstract class BaseRepository implements RepositoryInterface
     public function pluck($value, $key)
     {
         return $this->model->pluck($value, $key);
+    }
+
+    public function findBy($attribute, $value, $shouldThrowException = true)
+    {
+        $query = $this->entity->where($attribute, $value);
+
+        return $shouldThrowException ? $query->firstOrFail() : $query->first();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function query()
+    {
+        return $this->model->query();
     }
 }

@@ -2,35 +2,38 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
 
 class Student extends Model
 {
     use HasFactory;
+    use Sluggable;
 
     protected $table = 'students';
     protected $fillable = [
-        'first_name',
-        'last_name',
+        'name',
         'avatar',
         'gender',
         'birthdate',
-        'hometown',
         'phone',
         'email',
         'faculty_id',
+        'slug',
         'user_id',
         'description',
     ];
 
-    protected function fullName(): Attribute
-    {
-        return Attribute::make(
-            get: fn($value, $attributes) => $attributes['first_name'] . ' ' . $attributes['last_name'],
-        );
-    }
+//    protected function fullName(): Attribute
+//    {
+//        return Attribute::make(
+//            get: fn($value, $attributes) => $attributes['first_name'] . ' ' . $attributes['last_name'],
+//        );
+//    }
+
 
     public function subjects()
     {
@@ -53,9 +56,29 @@ class Student extends Model
         );
     }
 
-    public function user()
+    /**
+     * Interact with the user's first name.
+     *
+     * @param  string  $value
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function password(): Attribute
     {
-        return $this->belongsTo(User::class);
+        return Attribute::make(
+            set: fn ($value) => Hash::make($value),
+        );
     }
 
+    /**
+     * @return \string[][]
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug'=>[
+                'source'=>'name'
+            ]
+        ];
+        // TODO: Implement sluggable() method.
+    }
 }

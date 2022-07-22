@@ -42,6 +42,6 @@ interface RepositoryInterface
     public  function paginate();
 
     public function pluck($value, $key);
-
-
+    public function findBy($attribute, $value, $shouldThrowException = true);
+    public function query();
 }

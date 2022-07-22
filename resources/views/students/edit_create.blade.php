@@ -27,11 +27,11 @@
                     <strong>Student name</strong>
                     <div class="row g-3">
                         <div class="col">
-                            {!! Form::text('first_name',isset($student->first_name)?$student->first_name:null, ['class'=>'form-control', 'placeholder' => 'First Name']) !!}
+                            {!! Form::text('name',isset($student->name)?$student->name:null, ['class'=>'form-control', 'placeholder' => 'Name']) !!}
                         </div>
-                        <div class="col">
-                            {!! Form::text('last_name',isset($student->last_name)?$student->last_name:null, ['class'=>'form-control','placeholder' => 'Last Name']) !!}
-                        </div>
+{{--                        <div class="col">--}}
+{{--                            {!! Form::text('last_name',isset($student->last_name)?$student->last_name:null, ['class'=>'form-control','placeholder' => 'Last Name']) !!}--}}
+{{--                        </div>--}}
                     </div>
                 </div>
 
@@ -59,11 +59,6 @@
             </div>
 
             <div class="col-md-6">
-                <div class="form-group">
-                    <strong> Home town </strong>
-                    {!! Form::text('hometown',isset($student->hometown)?$student->hometown:null, ['class'=>'form-control','placeholder' => 'Enter Home town']) !!}
-                </div>
-
                 <div class="form-group">
                     <strong> Phone number </strong>
                     {!! Form::text('phone',isset($student->phone)?$student->phone:null, ['class'=>'form-control','placeholder' => 'Enter Phone number']) !!}
